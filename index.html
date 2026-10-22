@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lotus – Asian Cuisine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0d0d0d;
+      --dark:    #141414;
+      --surface: #1a1a1a;
+      --border:  #2a2a2a;
+      --gold:    #c9a96e;
+      --gold-lt: #e2c899;
+      --white:   #f5f0eb;
+      --muted:   #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: linear-gradient(to bottom, rgba(13,13,13,.95), transparent);
+      backdrop-filter: blur(4px);
+      transition: background .3s;
+    }
+    nav.scrolled {
+      background: rgba(13,13,13,.97);
+    }
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: .5rem 1.25rem;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('slide_hot_pot.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(.35);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero:hover .hero-bg { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 20%, rgba(13,13,13,.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .hero-logo {
+      width: min(380px, 80vw);
+    }
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      opacity: .6;
+    }
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: rgba(245,240,235,.7);
+      letter-spacing: .04em;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      color: var(--muted);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .hero-scroll:hover { color: var(--gold); }
+    .hero-scroll svg { animation: bounce 2s infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(5px); }
+    }
+
+    /* ── SECTION SHELL ── */
+    section { padding: 6rem 2rem; }
+    .section-label {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .section-body {
+      max-width: 520px;
+      color: rgba(245,240,235,.65);
+      font-size: .9rem;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--dark); }
+    .services-intro {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .services-intro .section-body {
+      margin: 0 auto;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+    .service-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--surface);
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .service-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.45) saturate(.8);
+      transition: filter .5s, transform .6s;
+    }
+    .service-card:hover img {
+      filter: brightness(.3) saturate(1);
+      transform: scale(1.06);
+    }
+    .service-card-body {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(13,13,13,.85) 0%, transparent 60%);
+    }
+    .service-num {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+      margin-bottom: .75rem;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.75rem;
+      line-height: 1.1;
+      margin-bottom: .5rem;
+    }
+    .service-desc {
+      font-size: .8rem;
+      color: rgba(245,240,235,.6);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, opacity .4s;
+      opacity: 0;
+    }
+    .service-card:hover .service-desc {
+      max-height: 80px;
+      opacity: 1;
+    }
+
+    /* ── LUNCH BUFFÉ ── */
+    #lunch {
+      background: var(--black);
+    }
+    .lunch-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .lunch-intro .section-body { max-width: none; }
+    .lunch-tables {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .lunch-table {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+    .lunch-table-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--gold-lt);
+      margin-bottom: 1rem;
+      letter-spacing: .03em;
+    }
+    .lunch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: .45rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .85rem;
+    }
+    .lunch-row:last-child { border-bottom: none; }
+    .lunch-row-label { color: rgba(245,240,235,.75); }
+    .lunch-row-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--gold);
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+    .lunch-note {
+      margin-top: 1rem;
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: .75rem;
+    }
+
+    /* ── KVÄLLSBUFFÉ ── */
+    #kvall {
+      background: var(--surface);
+    }
+    .kvall-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .kvall-intro .section-body { max-width: none; }
+    .kvall-price-box {
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+    .kvall-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: .45rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .85rem;
+    }
+    .kvall-price-row:last-child { border-bottom: none; }
+    .kvall-price-label { color: rgba(245,240,235,.75); }
+    .kvall-price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--gold);
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+    .kvall-price-note {
+      margin-top: .75rem;
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: .75rem;
+    }
+    .kvall-courses {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .kvall-course {
+      border-left: 2px solid var(--gold);
+      padding-left: 1.25rem;
+    }
+    .kvall-course-title {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .6rem;
+    }
+    .kvall-course ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+    .kvall-course ul li {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--white);
+    }
+    .kvall-course p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--white);
+    }
+
+    /* ── TAKE AWAY ── */
+    #takeaway {
+      background: var(--dark);
+    }
+    .takeaway-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .takeaway-times {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .takeaway-time-item {
+      border-top: 1px solid var(--border);
+      padding-top: .75rem;
+      min-width: 160px;
+    }
+    .takeaway-time-label {
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .3rem;
+    }
+    .takeaway-time-value {
+      font-size: .85rem;
+      color: rgba(245,240,235,.7);
+    }
+    .takeaway-specials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      margin-bottom: 3.5rem;
+    }
+    .takeaway-special-card {
+      background: var(--surface);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .takeaway-special-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+    .takeaway-special-sub {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .2rem;
+    }
+    .takeaway-special-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .menu-category {
+      margin-bottom: 3rem;
+    }
+    .menu-category-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--gold-lt);
+      margin-bottom: .25rem;
+    }
+    .menu-category-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 640px;
+      margin-bottom: 1rem;
+    }
+    .menu-category-subtitle {
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .menu-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .menu-items {
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid rgba(42,42,42,.6);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item-left {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .menu-item-num {
+      font-size: .7rem;
+      color: var(--muted);
+      min-width: 1.8rem;
+      flex-shrink: 0;
+    }
+    .menu-item-name {
+      font-size: .88rem;
+      color: var(--white);
+      line-height: 1.5;
+    }
+    .menu-item-sub {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .1rem;
+    }
+    .menu-item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .chilli {
+      display: inline-flex;
+      gap: 1px;
+      margin-left: .25rem;
+      vertical-align: middle;
+    }
+    .chilli span {
+      color: #e05a3a;
+      font-size: .7rem;
+    }
+    .menu-group-label {
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 1.5rem 0 .75rem;
+    }
+    .menu-group-label:first-child { margin-top: 0; }
+    .lotus-special {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .lotus-special-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+    }
+    .lotus-special-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold-lt);
+    }
+    .lotus-special-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+    }
+    .lotus-special-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .lotus-special-col-label {
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+    .lotus-special-col ul {
+      list-style: none;
+    }
+    .lotus-special-col ul li {
+      font-size: .83rem;
+      color: rgba(245,240,235,.75);
+      padding: .25rem 0;
+      border-bottom: 1px solid rgba(42,42,42,.5);
+    }
+    .lotus-special-col ul li:last-child { border-bottom: none; }
+
+    /* ── À LA CARTE ── */
+    #alacarte {
+      background: var(--surface);
+    }
+
+    /* ── HOT POT ── */
+    #hotpot {
+      background: var(--black);
+    }
+    .hotpot-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .hotpot-image {
+      position: relative;
+    }
+    .hotpot-image img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: brightness(.75) saturate(.9);
+    }
+    .hotpot-content .section-body { max-width: none; margin-bottom: 2rem; }
+    .hotpot-ingredients {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .hotpot-ingredients-title {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .hotpot-ingredients ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .hotpot-ingredients ul li {
+      font-size: .85rem;
+      color: rgba(245,240,235,.75);
+      padding-bottom: .4rem;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .hotpot-ingredients ul li:last-child { border-bottom: none; }
+    .hotpot-pricing {
+      display: flex;
+      gap: 1px;
+      background: var(--border);
+    }
+    .hotpot-price-card {
+      flex: 1;
+      background: var(--surface);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    .hotpot-price-label {
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hotpot-price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+    .hotpot-price-note {
+      font-size: .75rem;
+      color: var(--muted);
+    }
+    .hotpot-notice {
+      margin-top: 1.5rem;
+      font-size: .8rem;
+      color: var(--muted);
+      font-style: italic;
+      border-left: 2px solid var(--gold);
+      padding-left: .85rem;
+    }
+
+    /* ── GALLERY STRIP ── */
+    #gallery {
+      padding: 0;
+      overflow: hidden;
+    }
+    .gallery-strip {
+      display: flex;
+      height: 320px;
+    }
+    .gallery-strip-item {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-strip-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.6) saturate(.9);
+      transition: filter .5s, transform .6s;
+    }
+    .gallery-strip-item:hover img {
+      filter: brightness(.85) saturate(1.1);
+      transform: scale(1.08);
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--black);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-image {
+      position: relative;
+    }
+    .about-image img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: brightness(.8) saturate(.85);
+    }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: -1.5rem;
+      bottom: -1.5rem;
+      border: 1px solid var(--border);
+      z-index: -1;
+    }
+    .about-text .section-body { max-width: none; }
+    .about-detail {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .about-detail-item {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    .about-detail-item strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--gold-lt);
+      margin-bottom: .25rem;
+    }
+    .about-detail-item span {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+    }
+    #contact .section-title,
+    #contact .section-label { margin: 0 auto; }
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 3.5rem;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .contact-item-label {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .contact-item-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: var(--white);
+    }
+    .contact-item-sub {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .map-link {
+      display: inline-block;
+      margin-top: 3rem;
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,110,.3);
+      padding-bottom: 2px;
+      transition: border-color .2s;
+    }
+    .map-link:hover { border-color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer img { height: 32px; opacity: .5; }
+    footer p {
+      font-size: .7rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .lunch-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .kvall-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hotpot-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-image::after { display: none; }
+      .gallery-strip { height: 220px; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 4rem 1.25rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { gap: 2rem; }
+      footer { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">
+      <img src="copy-cropped-logo1.png" alt="Lotus Asian Cuisine" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="#services">Våra erbjudanden</a></li>
+      <li><a href="#lunch">Lunchbuffé</a></li>
+      <li><a href="#kvall">Kvällsbuffé</a></li>
+      <li><a href="#alacarte">À la carte</a></li>
+      <li><a href="#hotpot">Hot Pot</a></li>
+      <li><a href="#takeaway">Take Away</a></li>
+      <li><a href="#about">Om oss</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hitta oss</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img class="hero-logo" src="copy-cropped-logo1.png" alt="Lotus Asian Cuisine" />
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">Smaker från hela Asien – i hjärtat av staden</p>
+    </div>
+    <a href="#services" class="hero-scroll">
+      <span>Utforska</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 3v10M3 9l5 5 5-5"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="services-intro">
+        <p class="section-label">Vad vi erbjuder</p>
+        <h2 class="section-title">En upplevelse<br/>för alla tillfällen</h2>
+        <p class="section-body">
+          Välkommen till Lotus – ett asiatiskt kök med rätter från Kina, Japan och Sydostasien.
+          Vi erbjuder fyra sätt att njuta av vår mat.
+        </p>
+      </div>
+      <div class="services-grid">
+        <a class="service-card" href="#lunch">
+          <img src="slide_shoppinglunch.jpg" alt="Lunchbuffé" />
+          <div class="service-card-body">
+            <span class="service-num">01</span>
+            <h3 class="service-name">Lunchbuffé</h3>
+            <p class="service-desc">Rätter från flera asiatiska kök, varje veckodag till ett fast pris.</p>
+          </div>
+        </a>
+        <a class="service-card" href="#kvall">
+          <img src="slide_bbq1.jpg" alt="Kvällsbuffé" style="object-position: 75% center;" />
+          <div class="service-card-body">
+            <span class="service-num">02</span>
+            <h3 class="service-name">Kvällsbuffé</h3>
+            <p class="service-desc">Ett rikare urval på kvällen – ta för dig av det bästa från vår meny.</p>
+          </div>
+        </a>
+        <a class="service-card" href="#alacarte">
+          <img src="slide_dumplings.jpg" alt="À la carte" />
+          <div class="service-card-body">
+            <span class="service-num">03</span>
+            <h3 class="service-name">À la carte</h3>
+            <p class="service-desc">Välj dina favoriter och låt köksmästaren laga rätten precis som du vill ha den.</p>
+          </div>
+        </a>
+        <a class="service-card" href="#hotpot">
+          <img src="slide_hot_pot.jpg" alt="Hot Pot" />
+          <div class="service-card-body">
+            <span class="service-num">04</span>
+            <h3 class="service-name">Hot Pot</h3>
+            <p class="service-desc">Traditionell kinesisk eldgryta med färska råvaror som du tillagar själv i grytan.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUNCH BUFFÉ -->
+  <section id="lunch">
+    <div class="container">
+      <div class="lunch-inner">
+        <div class="lunch-intro">
+          <p class="section-label">Lunchbuffé</p>
+          <h2 class="section-title">Fräsch lunch<br/>varje dag</h2>
+          <p class="section-body">
+            Vår populära lunchbuffé serveras dagligen med rätter från flera asiatiska kök.
+            Välj fritt bland varma rätter, soppor och tillbehör – allt ingår i priset.
+            Take away-buffé finns också tillgänglig om du vill njuta av maten på annan plats.
+          </p>
+        </div>
+        <div class="lunch-tables">
+          <div class="lunch-table">
+            <div class="lunch-table-title">Buffé i restaurangen</div>
+            <div class="lunch-row">
+              <span class="lunch-row-label">Mån – Fre &nbsp;11:00 – 15:00</span>
+              <span class="lunch-row-price">145 kr</span>
+            </div>
+            <div class="lunch-row">
+              <span class="lunch-row-label">Lördag &nbsp;11:30 – 15:00</span>
+              <span class="lunch-row-price">165 kr</span>
+            </div>
+            <div class="lunch-note">
+              Barn upp till 3 år 30 kr &nbsp;·&nbsp; Barn 4–10 år 80 kr &nbsp;·&nbsp; Gäller alla dagar
+            </div>
+          </div>
+          <div class="lunch-table">
+            <div class="lunch-table-title">Take Away-buffé</div>
+            <div class="lunch-row">
+              <span class="lunch-row-label">Mån – Fre &nbsp;11:00 – 15:00</span>
+              <span class="lunch-row-price">129 kr</span>
+            </div>
+            <div class="lunch-row">
+              <span class="lunch-row-label">Lördag &nbsp;11:30 – 15:00</span>
+              <span class="lunch-row-price">129 kr</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KVÄLLSBUFFÉ -->
+  <section id="kvall">
+    <div class="container">
+      <div class="kvall-inner">
+        <div class="kvall-intro">
+          <p class="section-label">Kvällsbuffé</p>
+          <h2 class="section-title">En hel kväll<br/>av smakupplevelser</h2>
+          <p class="section-body">
+            Kvällsbuffén är en trerätters upplevelse där du väljer förrätt, följd av BBQ från buffébordet
+            tillagad direkt av kocken, och avslutar med dessert efter eget val.
+          </p>
+          <div class="kvall-price-box">
+            <div class="kvall-price-row">
+              <span class="kvall-price-label">Alla dagar &nbsp;16:00 – 21:00</span>
+              <span class="kvall-price-value">299 kr</span>
+            </div>
+            <div class="kvall-price-note">
+              Barn upp till 3 år 30 kr &nbsp;·&nbsp; Barn 4–10 år 80 kr &nbsp;·&nbsp; Gäller alla dagar
+            </div>
+          </div>
+        </div>
+        <div class="kvall-courses">
+          <div class="kvall-course">
+            <div class="kvall-course-title">Förrätt – välj ett alternativ</div>
+            <ul>
+              <li>Kycklingspett med jordnötssås</li>
+              <li>Stora krispiga vårrullar</li>
+              <li>Tom Yum Räksoppa</li>
+            </ul>
+          </div>
+          <div class="kvall-course">
+            <div class="kvall-course-title">Huvudrätt</div>
+            <p>BBQ, valfritt från buffébordet som tillreds direkt av kocken</p>
+          </div>
+          <div class="kvall-course">
+            <div class="kvall-course-title">Dessert</div>
+            <p>Valfritt från buffébordet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAKE AWAY -->
+  <section id="takeaway">
+    <div class="container">
+      <div class="takeaway-header">
+        <div>
+          <p class="section-label">Take Away</p>
+          <h2 class="section-title">Ta med dig<br/>hem</h2>
+        </div>
+        <div class="takeaway-times">
+          <div class="takeaway-time-item">
+            <div class="takeaway-time-label">Måndag – Fredag</div>
+            <div class="takeaway-time-value">11:00 – 15:00</div>
+          </div>
+          <div class="takeaway-time-item">
+            <div class="takeaway-time-label">Lördag</div>
+            <div class="takeaway-time-value">11:30 – 15:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specials -->
+      <div class="takeaway-specials">
+        <div class="takeaway-special-card">
+          <div>
+            <div class="takeaway-special-name">Sushi</div>
+            <div class="takeaway-special-sub">16 bitar</div>
+          </div>
+          <div class="takeaway-special-price">129 kr</div>
+        </div>
+        <div class="takeaway-special-card">
+          <div>
+            <div class="takeaway-special-name">Thaibuffé</div>
+            <div class="takeaway-special-sub">Ta med dig buffén</div>
+          </div>
+          <div class="takeaway-special-price">129 kr</div>
+        </div>
+      </div>
+
+      <!-- Lotus Special -->
+      <div class="menu-category">
+        <div class="menu-category-title">Lotus Special</div>
+        <div class="menu-divider"></div>
+        <div class="lotus-special">
+          <div class="lotus-special-header">
+            <span class="lotus-special-title">Välj ett komplett set</span>
+            <span class="lotus-special-price">158 kr</span>
+          </div>
+          <div class="lotus-special-cols">
+            <div class="lotus-special-col">
+              <div class="lotus-special-col-label">Set A</div>
+              <ul>
+                <li>Oxfilé wokad med Stark basilika <span class="chilli"><span>🌶</span></span></li>
+                <li>Jätteräkor wokad med räkpasta</li>
+                <li>Kycklingspett med jordnötssås</li>
+                <li>Friterad kyckling med sötsursås</li>
+              </ul>
+            </div>
+            <div class="lotus-special-col">
+              <div class="lotus-special-col-label">Set B</div>
+              <ul>
+                <li>Kycklingfilé med Rödcurry <span class="chilli"><span>🌶</span></span></li>
+                <li>Fläskspett med jordnötssås</li>
+                <li>Oxfilé wokad med ostronsås</li>
+                <li>Friterade räkor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Förrätter -->
+      <div class="menu-category">
+        <div class="menu-category-title">Förrätter</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">1.</span><div><div class="menu-item-name">Vegetariska vårrullar</div></div></div>
+            <span class="menu-item-price">40 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">2.</span><div><div class="menu-item-name">Stora krispiga vårrullar</div></div></div>
+            <span class="menu-item-price">65 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">3.</span><div><div class="menu-item-name">Grillade kycklingspett med jordnötssås</div></div></div>
+            <span class="menu-item-price">60 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">4.</span><div><div class="menu-item-name">Oxfilésallad på thailändskt vis <span class="chilli"><span>🌶</span></span></div></div></div>
+            <span class="menu-item-price">65 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">5.</span><div><div class="menu-item-name">Skaldjurssallad <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">räkor, bläckfisk</div></div></div>
+            <span class="menu-item-price">65 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">6.</span><div><div class="menu-item-name">Tom Yum Skaldjurssoppa <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">räkor, bläckfisk, tomat, champinjon, citrongräs, koriander</div></div></div>
+            <span class="menu-item-price">65 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">7.</span><div><div class="menu-item-name">Tom Yum Kycklingsoppa <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">tomat, champinjon, citrongräs, koriander, kokosmjölk</div></div></div>
+            <span class="menu-item-price">65 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">8.</span><div><div class="menu-item-name">Dumplings 5 st</div></div></div>
+            <span class="menu-item-price">65 kr</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><span class="menu-item-num">8.</span><div><div class="menu-item-name">Dumplings 12 st</div></div></div>
+            <span class="menu-item-price">130 kr</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Huvudrätter -->
+      <div class="menu-category">
+        <div class="menu-category-title">Huvudrätter</div>
+        <div class="menu-divider"></div>
+
+        <div class="menu-group-label">Grön Curry <span class="chilli"><span>🌶</span><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-category-desc">Den röda curryn består bland annat av röd chilifrukt, färsk koriander, kummin, kryddnejlikor och galangal som tillagas med bambuskott, kokosmjölk, färsk aubergine och paprika. Kryddas med fiskbuljong, limeblad samt färsk basilika.</div>
+        <div class="menu-items" style="margin-bottom:1.5rem">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">10.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">11.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">12.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">13.</span><div class="menu-item-name">Lax</div></div><span class="menu-item-price">140 kr</span></div>
+        </div>
+
+        <div class="menu-group-label">Röd Curry <span class="chilli"><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-category-desc">Den röda curryn består av röd chilifrukt, färsk koriander, kummin, kryddnejlikor och galangal med bambuskott, kokosmjölk, färsk aubergine och paprika. Kryddas med fiskbuljong, limeblad samt färsk basilika – krämig och kokosdoftande.</div>
+        <div class="menu-items" style="margin-bottom:1.5rem">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">15.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">16.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">17.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">18.</span><div class="menu-item-name">Lax</div></div><span class="menu-item-price">140 kr</span></div>
+        </div>
+
+        <div class="menu-group-label">Stark Basilika, Bai Grapao <span class="chilli"><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-category-desc">Bai Grapao härstammar från Ostindien och ger en kraftfull smak. Wokas med färska grönsaker, röd chili och vitlök, sedan tillsätts soja, ostronsås och fiskbuljong för att lyfta fram smaken.</div>
+        <div class="menu-items" style="margin-bottom:1.5rem">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">25.</span><div class="menu-item-name">Ankfilé</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">26.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">27.</span><div><div class="menu-item-name">Skaldjur</div><div class="menu-item-sub">räkor, bläckfisk, musslor, lax</div></div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">28.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">29.</span><div class="menu-item-name">Bläckfisk</div></div><span class="menu-item-price">135 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">30.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">31.</span><div><div class="menu-item-name">Mix</div><div class="menu-item-sub">kyckling, biff, räkor</div></div></div><span class="menu-item-price">140 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Asiatiska specialitéer -->
+      <div class="menu-category">
+        <div class="menu-category-title">Asiatiska specialitéer</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">40.</span><div class="menu-item-name">Kyckling med ingefära</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">41.</span><div class="menu-item-name">Kyckling med cashewnötter</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">42.</span><div class="menu-item-name">Vitlöksmarinerad oxfilé i svartpeppar och koriandersås</div></div><span class="menu-item-price">145 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">43.</span><div class="menu-item-name">Vitlöksmarinerade räkor i svartpeppar koriandersås</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">44.</span><div class="menu-item-name">Oxfilé med Ostronsås</div></div><span class="menu-item-price">140 kr</span></div>
+        </div>
+        <div class="menu-group-label" style="margin-top:1.5rem">Räkpasta wokad med färska grönsaker <span class="chilli"><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">51.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">52.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">140 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">53.</span><div class="menu-item-name">Bläckfisk</div></div><span class="menu-item-price">130 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">54.</span><div class="menu-item-name">Kyckling</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">55.</span><div class="menu-item-name">Skaldjur</div></div><span class="menu-item-price">140 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Nudlar & Ris -->
+      <div class="menu-category">
+        <div class="menu-category-title">Nudlar &amp; Ris</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">56.</span><div><div class="menu-item-name">Wokade äggnudlar</div><div class="menu-item-sub">kycklingfilé, räkor, biff och färska grönsaker</div></div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">57.</span><div><div class="menu-item-name">Wokat ris</div><div class="menu-item-sub">kycklingfilé och räkor</div></div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">58.</span><div><div class="menu-item-name">Pad Thai</div><div class="menu-item-sub">risnudlar wokade med räkor, kycklingfilé, biff och färska grönsaker</div></div></div><span class="menu-item-price">129 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Vegetariskt -->
+      <div class="menu-category">
+        <div class="menu-category-title">Vegetariskt</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">60.</span><div class="menu-item-name">Vårrullar med ris</div></div><span class="menu-item-price">95 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">61.</span><div class="menu-item-name">Wokade färska grönsaker</div></div><span class="menu-item-price">120 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">62.</span><div class="menu-item-name">Äggnudlar med färska grönsaker</div></div><span class="menu-item-price">120 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">63.</span><div class="menu-item-name">Wokat ris med ägg och färska grönsaker</div></div><span class="menu-item-price">120 kr</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.75rem;">* Alla curry- och basilikarätter kan tillagas på vegetariskt vis.</p>
+      </div>
+
+      <!-- Friterat -->
+      <div class="menu-category">
+        <div class="menu-category-title">Friterat</div>
+        <div class="menu-category-desc">Serveras med ris och sötsursås / currysås</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">66.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">67.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">135 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Grillspett -->
+      <div class="menu-category">
+        <div class="menu-category-title">Grillspett med jordnötssås</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">69.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">129 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Extra tillval -->
+      <div class="menu-category">
+        <div class="menu-category-title">Extra tillval</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Nudlar istället för ris</div></div><span class="menu-item-price">20 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Extra ris</div></div><span class="menu-item-price">25 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Extra nudlar</div></div><span class="menu-item-price">30 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Wokat ris</div></div><span class="menu-item-price">30 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Jordnötssås</div></div><span class="menu-item-price">25 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Curry / Sötsursås</div></div><span class="menu-item-price">20 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Thailändska räkchips</div></div><span class="menu-item-price">15 kr</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- À LA CARTE -->
+  <section id="alacarte">
+    <div class="container">
+      <p class="section-label">À la carte</p>
+      <h2 class="section-title" style="margin-bottom:3rem">Välj dina favoriter</h2>
+
+      <!-- Förrätter -->
+      <div class="menu-category">
+        <div class="menu-category-title">Förrätter</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">1.</span><div class="menu-item-name">Vegetariska vårrullar</div></div><span class="menu-item-price">52 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">2.</span><div class="menu-item-name">Stora krispiga vårrullar</div></div><span class="menu-item-price">65 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">3.</span><div class="menu-item-name">Grillade kycklingspett med jordnötssås</div></div><span class="menu-item-price">65 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">4.</span><div class="menu-item-name">Oxfilésallad på thailändskt vis <span class="chilli"><span>🌶</span></span></div></div><span class="menu-item-price">75 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">5.</span><div><div class="menu-item-name">Skaldjurssallad <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">räkor, bläckfisk</div></div></div><span class="menu-item-price">75 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">6.</span><div><div class="menu-item-name">Tom Yum Skaldjurssoppa <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">räkor, bläckfisk, tomat, champinjon, citrongräs, koriander</div></div></div><span class="menu-item-price">75 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">7.</span><div><div class="menu-item-name">Tom Yum Kycklingsoppa <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">tomat, champinjon, citrongräs, koriander, kokosmjölk</div></div></div><span class="menu-item-price">75 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">8.</span><div class="menu-item-name">Dumplings</div></div><span class="menu-item-price">68 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Huvudrätter -->
+      <div class="menu-category">
+        <div class="menu-category-title">Huvudrätter</div>
+        <div class="menu-divider"></div>
+
+        <!-- Lotus Special -->
+        <div class="lotus-special" style="margin-bottom:2rem">
+          <div class="lotus-special-header">
+            <span class="lotus-special-title">Lotus Special – välj ett set</span>
+            <span class="lotus-special-price">189 kr</span>
+          </div>
+          <div class="lotus-special-cols">
+            <div class="lotus-special-col">
+              <div class="lotus-special-col-label">Set A</div>
+              <ul>
+                <li>Oxfilé wokad med Stark basilika <span class="chilli"><span>🌶</span></span></li>
+                <li>Jätteräkor wokad med räkpasta</li>
+                <li>Kycklingspett med jordnötssås</li>
+                <li>Friterad kyckling med sötsursås</li>
+              </ul>
+            </div>
+            <div class="lotus-special-col">
+              <div class="lotus-special-col-label">Set B</div>
+              <ul>
+                <li>Kycklingfilé med Rödcurry <span class="chilli"><span>🌶</span></span></li>
+                <li>Fläskspett med jordnötssås</li>
+                <li>Oxfilé wokad med ostronsås</li>
+                <li>Friterade räkor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-group-label">Grön Curry <span class="chilli"><span>🌶</span><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-category-desc">Smakstark curry med bambuskott, kokosmjölk, färsk aubergine och paprika. Kryddas med fiskbuljong, limeblad och färsk basilika.</div>
+        <div class="menu-items" style="margin-bottom:1.5rem">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">10.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">11.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">179 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">12.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">189 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">13.</span><div class="menu-item-name">Lax</div></div><span class="menu-item-price">179 kr</span></div>
+        </div>
+
+        <div class="menu-group-label">Röd Curry <span class="chilli"><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-category-desc">Röd chilifrukt, koriander, kummin och galangal med bambuskott, kokosmjölk och paprika. Krämig och kokosdoftande.</div>
+        <div class="menu-items" style="margin-bottom:1.5rem">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">15.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">16.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">179 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">17.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">189 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">18.</span><div class="menu-item-name">Lax</div></div><span class="menu-item-price">179 kr</span></div>
+        </div>
+
+        <div class="menu-group-label">Stark Basilika, Bai Grapao <span class="chilli"><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-category-desc">Bai Grapao från Ostindien – wokas med färska grönsaker, röd chili och vitlök, soja, ostronsås och fiskbuljong.</div>
+        <div class="menu-items" style="margin-bottom:1.5rem">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">25.</span><div class="menu-item-name">Ankfilé</div></div><span class="menu-item-price">175 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">26.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">27.</span><div><div class="menu-item-name">Skaldjur</div><div class="menu-item-sub">räkor, bläckfisk, musslor, lax</div></div></div><span class="menu-item-price">179 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">28.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">189 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">29.</span><div class="menu-item-name">Bläckfisk</div></div><span class="menu-item-price">169 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">30.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">179 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">31.</span><div><div class="menu-item-name">Mix</div><div class="menu-item-sub">kyckling, biff, räkor</div></div></div><span class="menu-item-price">169 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Asiatiska specialitéer -->
+      <div class="menu-category">
+        <div class="menu-category-title">Asiatiska specialitéer</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">40.</span><div class="menu-item-name">Kyckling med ingefära</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">41.</span><div class="menu-item-name">Kyckling med cashewnötter</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">42.</span><div class="menu-item-name">Vitlöksmarinerad oxfilé i svartpeppar och koriandersås</div></div><span class="menu-item-price">220 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">43.</span><div class="menu-item-name">Vitlöksmarinerade räkor i svartpeppar koriandersås</div></div><span class="menu-item-price">179 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">44.</span><div class="menu-item-name">Dumplings</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">46.</span><div><div class="menu-item-name">Nudelsoppa</div><div class="menu-item-sub">kyckling, räkor, fiskbullar och färska grönsaker</div></div></div><span class="menu-item-price">155 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">47.</span><div><div class="menu-item-name">Tom Yum Nudelsoppa <span class="chilli"><span>🌶</span></span></div><div class="menu-item-sub">räkor, bläckfisk, fiskbullar, krabbfisk och färska grönsaker</div></div></div><span class="menu-item-price">155 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">48.</span><div class="menu-item-name">Järnplanka med räkor och wokade färska grönsaker</div></div><span class="menu-item-price">189 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">49.</span><div class="menu-item-name">Järnplanka med oxfilé och wokade färska grönsaker</div></div><span class="menu-item-price">220 kr</span></div>
+        </div>
+        <div class="menu-group-label" style="margin-top:1.5rem">Räkpasta wokad med färska grönsaker <span class="chilli"><span>🌶</span><span>🌶</span></span></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">51.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">179 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">52.</span><div class="menu-item-name">Oxfilé</div></div><span class="menu-item-price">189 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">53.</span><div class="menu-item-name">Bläckfisk</div></div><span class="menu-item-price">169 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">54.</span><div class="menu-item-name">Kyckling</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">55.</span><div class="menu-item-name">Skaldjur</div></div><span class="menu-item-price">179 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Nudlar & Ris -->
+      <div class="menu-category">
+        <div class="menu-category-title">Nudlar &amp; Ris</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">56.</span><div><div class="menu-item-name">Wokade äggnudlar</div><div class="menu-item-sub">kycklingfilé, räkor, biff och färska grönsaker</div></div></div><span class="menu-item-price">155 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">57.</span><div><div class="menu-item-name">Wokat ris</div><div class="menu-item-sub">kycklingfilé och räkor</div></div></div><span class="menu-item-price">155 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">58.</span><div><div class="menu-item-name">Pad Thai</div><div class="menu-item-sub">risnudlar wokade med räkor, kycklingfilé, biff och färska grönsaker</div></div></div><span class="menu-item-price">159 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Vegetariskt -->
+      <div class="menu-category">
+        <div class="menu-category-title">Vegetariskt</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">60.</span><div class="menu-item-name">Vårrullar</div></div><span class="menu-item-price">129 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">61.</span><div class="menu-item-name">Wokade färska grönsaker</div></div><span class="menu-item-price">139 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">62.</span><div class="menu-item-name">Äggnudlar med färska grönsaker</div></div><span class="menu-item-price">139 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">63.</span><div class="menu-item-name">Wokat ris med ägg och färska grönsaker</div></div><span class="menu-item-price">139 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">65.</span><div class="menu-item-name">Nudelsoppa</div></div><span class="menu-item-price">139 kr</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.75rem;">* Alla curry- och basilikarätter kan tillagas på vegetariskt vis.</p>
+      </div>
+
+      <!-- Friterat -->
+      <div class="menu-category">
+        <div class="menu-category-title">Friterat</div>
+        <div class="menu-category-desc">Serveras med ris och sötsursås / currysås</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">66.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">68.</span><div class="menu-item-name">Räkor</div></div><span class="menu-item-price">169 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Grillspett -->
+      <div class="menu-category">
+        <div class="menu-category-title">Grillspett med jordnötssås</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">69.</span><div class="menu-item-name">Kycklingfilé</div></div><span class="menu-item-price">159 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">70.</span><div class="menu-item-name">Fläskfilé</div></div><span class="menu-item-price">159 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Barnmeny -->
+      <div class="menu-category">
+        <div class="menu-category-title">Barnmeny</div>
+        <div class="menu-divider"></div>
+        <div class="lotus-special">
+          <div class="lotus-special-header">
+            <span class="lotus-special-title">Välj ett alternativ</span>
+            <span class="lotus-special-price">90 kr</span>
+          </div>
+          <div class="menu-items" style="margin-top:.5rem">
+            <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">1.</span><div class="menu-item-name">Wokat ris med kyckling</div></div></div>
+            <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">2.</span><div class="menu-item-name">Wokade äggnudlar med kyckling</div></div></div>
+            <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">3.</span><div class="menu-item-name">Friterad kyckling med sötsursås eller jordnötssås</div></div></div>
+            <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">4.</span><div class="menu-item-name">Kycklingspett med jordnötssås</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra tillbehör -->
+      <div class="menu-category">
+        <div class="menu-category-title">Extra tillbehör</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">1.</span><div class="menu-item-name">Wokat ris med ägg</div></div><span class="menu-item-price">35 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num">2.</span><div class="menu-item-name">Wokade äggnudlar</div></div><span class="menu-item-price">35 kr</span></div>
+        </div>
+      </div>
+
+      <!-- Dessert -->
+      <div class="menu-category">
+        <div class="menu-category-title">Dessert</div>
+        <div class="menu-divider"></div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Friterad banan med vaniljglass</div></div><span class="menu-item-price">55 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Kokosglass</div></div><span class="menu-item-price">55 kr</span></div>
+          <div class="menu-item"><div class="menu-item-left"><span class="menu-item-num"></span><div class="menu-item-name">Ananasglass</div></div><span class="menu-item-price">55 kr</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOT POT -->
+  <section id="hotpot">
+    <div class="container">
+      <div class="hotpot-inner">
+        <div class="hotpot-image">
+          <img src="slide_hot_pot.jpg" alt="Hot Pot" />
+        </div>
+        <div class="hotpot-content">
+          <p class="section-label">Hot Pot</p>
+          <h2 class="section-title">Traditionell<br/>kinesisk eldgryta</h2>
+          <p class="section-body">
+            Hot Pot är en traditionell, spännande och hälsosam kinesisk eldgryta som serveras med en mild
+            eller kryddstark buljong i grytan samt färska råvaror som kött och grönsaker som man själv tillagar
+            i grytan. I Kina är Hot Pot en mycket uppskattad rätt, speciellt populär i samband med stora sällskap.
+          </p>
+          <div class="hotpot-ingredients">
+            <div class="hotpot-ingredients-title">Råvaror till grytan</div>
+            <ul>
+              <li>Entrecôte i fina skivor</li>
+              <li>Räkor, bläckfisk, fiskbullar, lax, gröna musslor</li>
+              <li>Kinakål, aubergine, squash, rättika, tofu, champinjon</li>
+              <li>Serveras med ris</li>
+            </ul>
+          </div>
+          <div class="hotpot-pricing">
+            <div class="hotpot-price-card">
+              <div class="hotpot-price-label">Per person</div>
+              <div class="hotpot-price-value">255 kr</div>
+              <div class="hotpot-price-note">Minst 2 personer</div>
+            </div>
+            <div class="hotpot-price-card">
+              <div class="hotpot-price-label">Extra påfyllning</div>
+              <div class="hotpot-price-value">65 kr</div>
+              <div class="hotpot-price-note">Per person</div>
+            </div>
+          </div>
+          <p class="hotpot-notice">Beställ gärna någon dag i förväg.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <div id="gallery">
+    <div class="gallery-strip">
+      <div class="gallery-strip-item"><img src="slide_hot_pot.jpg" alt="Hot Pot" /></div>
+      <div class="gallery-strip-item"><img src="slide_dumplings.jpg" alt="Dumplings" /></div>
+      <div class="gallery-strip-item"><img src="slide_bbq1.jpg" alt="BBQ" /></div>
+      <div class="gallery-strip-item"><img src="slide_lunch.jpg" alt="Lunch" /></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-image">
+          <img src="slide_hot_pot.jpg" alt="Lotus restaurang" />
+        </div>
+        <div class="about-text">
+          <p class="section-label">Om oss</p>
+          <h2 class="section-title">Autentiska smaker,<br/>hjärtlig service</h2>
+          <p class="section-body">
+            Lotus är ett asiatiskt restaurangkök med passion för äkta smaker och råvaror av hög kvalitet.
+            Vårt team kombinerar traditionella recept med moderna tekniker för att skapa minnesvärda
+            upplevelser – vare sig du väljer buffé, à la carte eller take away.
+          </p>
+          <div class="about-detail">
+            <div class="about-detail-item">
+              <strong>Mån – Tors</strong>
+              <span>11:00 – 21:00</span>
+            </div>
+            <div class="about-detail-item">
+              <strong>Fredag</strong>
+              <span>11:00 – 22:00</span>
+            </div>
+            <div class="about-detail-item">
+              <strong>Lördag</strong>
+              <span>11:30 – 22:00</span>
+            </div>
+            <div class="about-detail-item">
+              <strong>Söndag</strong>
+              <span>12:00 – 21:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Hitta oss</p>
+      <h2 class="section-title">Välkommen till Lotus</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="contact-item-label">Adress</span>
+          <span class="contact-item-value">Brogatan 19</span>
+          <span class="contact-item-sub">302 43 Halmstad</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Telefon</span>
+          <span class="contact-item-value">035 – 175 070</span>
+          <span class="contact-item-sub">Ring & beställ take away</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Webb</span>
+          <span class="contact-item-value">restauranglotus.se</span>
+          <span class="contact-item-sub">Fullständig meny & info</span>
+        </div>
+      </div>
+      <a href="https://maps.google.com/maps?ll=56.674447,12.854339&z=14&t=m&hl=sv&gl=US&mapclient=embed&q=Brogatan%2019%20302%2042%20Halmstad" class="map-link" target="_blank" rel="noopener">
+        Visa på Google Maps →
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="copy-cropped-logo1.png" alt="Lotus" />
+    <p>© 2026 Lotus Asian Cuisine. Alla rättigheter förbehållna.</p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  </script>
+
+</body>
+</html>
