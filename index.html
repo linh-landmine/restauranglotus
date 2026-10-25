@@ -41,12 +41,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.25rem 3rem;
-      background: linear-gradient(to bottom, rgba(13,13,13,.95), transparent);
-      backdrop-filter: blur(4px);
+      background: linear-gradient(to bottom, rgba(13,13,13,.98) 0%, rgba(13,13,13,.7) 70%, transparent 100%);
+      backdrop-filter: blur(6px);
       transition: background .3s;
     }
     nav.scrolled {
       background: rgba(13,13,13,.97);
+    }
+    nav.menu-open {
+      background: #0d0d0d;
     }
     .nav-logo img {
       height: 48px;
@@ -58,7 +61,7 @@
       list-style: none;
     }
     .nav-links a {
-      color: var(--muted);
+      color: rgba(245,240,235,.7);
       text-decoration: none;
       font-size: .8rem;
       letter-spacing: .12em;
@@ -821,22 +824,69 @@
       letter-spacing: .06em;
     }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .4rem;
+      position: relative;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--white);
+      transition: transform .3s, opacity .3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: #0d0d0d;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        z-index: 100;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1.1rem; color: var(--white); letter-spacing: .14em; }
+      nav.menu-open { backdrop-filter: none; }
       .lunch-inner { grid-template-columns: 1fr; gap: 3rem; }
       .kvall-inner { grid-template-columns: 1fr; gap: 3rem; }
       .hotpot-inner { grid-template-columns: 1fr; gap: 3rem; }
       .about-inner { grid-template-columns: 1fr; gap: 3rem; }
       .about-image::after { display: none; }
-      .gallery-strip { height: 220px; }
+      .gallery-strip { height: 200px; }
     }
     @media (max-width: 600px) {
-      section { padding: 4rem 1.25rem; }
+      section { padding: 3.5rem 1.25rem; }
       .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card { aspect-ratio: 2/3; }
       .contact-grid { gap: 2rem; }
       footer { padding: 2rem 1.25rem; }
+      .lotus-special-cols { grid-template-columns: 1fr; }
+      .hotpot-pricing { flex-direction: column; }
+      .takeaway-header { flex-direction: column; align-items: flex-start; }
+      .about-detail { grid-template-columns: 1fr 1fr; }
+      .lunch-row { flex-direction: column; gap: .2rem; }
+      .lunch-row-price { margin-left: 0; }
+      .gallery-strip { height: 140px; }
+      .gallery-strip-item:nth-child(3),
+      .gallery-strip-item:nth-child(4) { display: none; }
     }
   </style>
 </head>
@@ -847,7 +897,7 @@
     <div class="nav-logo">
       <img src="copy-cropped-logo1.png" alt="Lotus Asian Cuisine" />
     </div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="#services">Våra erbjudanden</a></li>
       <li><a href="#lunch">Lunchbuffé</a></li>
       <li><a href="#kvall">Kvällsbuffé</a></li>
@@ -858,6 +908,9 @@
       <li><a href="#contact">Kontakt</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Hitta oss</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Meny" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
@@ -1572,6 +1625,23 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    const hamburger = document.getElementById('navHamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      nav.classList.toggle('menu-open', open);
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('menu-open');
+      });
     });
   </script>
 
